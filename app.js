@@ -1145,12 +1145,24 @@
       attributionControl: true,
       zoomSnap: 0.5,
     }).setView([a.lat, a.lon], 15);
-    L.tileLayer(TILE, {
+    var tiles = L.tileLayer(TILE, {
       subdomains: "abcd",
       maxZoom: 20,
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
     }).addTo(map);
+    /* jika tile CARTO gagal berulang, pindah ke tile OpenStreetMap */
+    var tileErr = 0;
+    tiles.on("tileerror", function () {
+      if (++tileErr === 6) {
+        map.removeLayer(tiles);
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19,
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }).addTo(map);
+      }
+    });
     var m = (MAPS[id] = {
       card: card,
       mode: mode,

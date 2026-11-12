@@ -554,7 +554,7 @@ small {
   border: 1px solid var(--line);
   border-radius: 22px;
   overflow: hidden;
-  background: var(--peach);
+  background: var(--peach) url("assets/map-fallback.svg") center / cover no-repeat;
   height: clamp(320px, 64vw, 520px);
   isolation: isolate;
 }
@@ -586,8 +586,9 @@ small {
   place-items: center;
   padding: 24px;
   text-align: center;
-  color: var(--ink-2);
+  color: var(--navy);
   font-weight: 600;
+  background: rgba(255, 242, 239, 0.55);
 }
 .mapctl {
   position: absolute;
@@ -632,7 +633,7 @@ small {
 /* Leaflet */
 .leaflet-container {
   font-family: var(--f-body);
-  background: var(--peach);
+  background: transparent;
 }
 .leaflet-tile-pane {
   filter: sepia(0.14) saturate(0.95);
