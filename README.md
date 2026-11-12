@@ -4,7 +4,7 @@ Prototipe web pelacak tumbler dengan peta, GPS, pencarian alamat, dan navigasi r
 
 ## Isi
 - `index.html`, `style.css`, `app.js`, folder `assets/` (logo, favicon, gambar botol)
-- Peta: Leaflet + tile OpenStreetMap/CARTO
+- Peta: Leaflet + tile OpenStreetMap (+ citra satelit Esri)
 - Alamat: Nominatim (cari alamat dan nama jalan)
 - Rute dan petunjuk belok: OSRM (routing.openstreetmap.de)
 - Semua layanan di atas butuh internet dan tidak butuh API key.

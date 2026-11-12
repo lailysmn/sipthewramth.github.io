@@ -636,7 +636,7 @@ small {
   background: transparent;
 }
 .leaflet-tile-pane {
-  filter: sepia(0.14) saturate(0.95);
+  filter: saturate(0.95);
 }
 .leaflet-control-attribution {
   font-size: 10px;

@@ -3,7 +3,7 @@
 
   /* =====================================================================
      Sip the Warmth
-     - Peta nyata: Leaflet + tile OpenStreetMap (CARTO)
+     - Peta nyata: Leaflet + tile OpenStreetMap + satelit Esri
      - Lokasi saya: GPS browser (watchPosition), real-time
      - Alamat: Nominatim (cari alamat dan nama jalan dari koordinat)
      - Rute dan petunjuk belok: OSRM (routing.openstreetmap.de)
@@ -1087,7 +1087,7 @@
   /* ---------- peta (Leaflet) ---------- */
   var MAPS = {};
   var TILE =
-    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+    "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
   function pinIcon(it, sel) {
     var col = sel ? "#F7A5A5" : !it.online ? "#8D94A6" : "#1A2A4F",
       ink = sel ? "#1A2A4F" : "#FFF2EF",
@@ -1145,24 +1145,24 @@
       attributionControl: true,
       zoomSnap: 0.5,
     }).setView([a.lat, a.lon], 15);
-    var tiles = L.tileLayer(TILE, {
-      subdomains: "abcd",
-      maxZoom: 20,
+    var osm = L.tileLayer(TILE, {
+      maxZoom: 19,
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
-    /* jika tile CARTO gagal berulang, pindah ke tile OpenStreetMap */
-    var tileErr = 0;
-    tiles.on("tileerror", function () {
-      if (++tileErr === 6) {
-        map.removeLayer(tiles);
-        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          maxZoom: 19,
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        }).addTo(map);
-      }
-    });
+    var sat = L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      {
+        maxZoom: 19,
+        attribution: "Tiles &copy; Esri &mdash; Maxar, Earthstar Geographics",
+      },
+    );
+    L.control
+      .layers({ Peta: osm, Satelit: sat }, null, {
+        position: "bottomleft",
+        collapsed: true,
+      })
+      .addTo(map);
     var m = (MAPS[id] = {
       card: card,
       mode: mode,
